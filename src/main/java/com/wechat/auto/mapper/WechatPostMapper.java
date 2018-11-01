@@ -191,4 +191,19 @@ public interface WechatPostMapper {
             "delete from postTable"
     })
     int deleteAllData();
+
+    @Select({"<script>",
+            "select",
+            "id, biz, appmsgid, title, digest, contenturl, sourceurl, cover, datetime, readnum, ",
+            "likenum, isspider, author, nickname, weight, posttype, content",
+            "from postTable where nickname in ",
+            "<foreach item='item' collection='nickname' open='(' close=')' separator=','>",
+            "#{item}",
+            "</foreach>",
+            " and datetime >=#{datetime,jdbcType=TIMESTAMP}",
+            "order by weight DESC",
+            "</script>"
+    })
+    @ResultMap("ResultMapWithBLOBs")
+    List<WechatPost> getATAPosts(@Param("nickname") List<String> nickname, @Param("datetime") Date time);
 }
