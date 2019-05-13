@@ -24,7 +24,7 @@ public class WechatController {
 	@Autowired
 	private WechatPostMapper wechatPostMapper;
 
-	private final String HOST = "https://mp.weixin.qq.com";
+	private final String HOST = "https://mp.weixin.qq.com/s?";
 
 	@RequestMapping("/getWxPost")
 	public void getWxPost(HttpServletRequest request, HttpServletResponse response){

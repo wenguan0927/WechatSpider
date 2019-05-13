@@ -42,6 +42,8 @@ public class Utils {
 
     public static final int KEYWORD_TYPE_EXTEND = 4;
 
+    public static String[] ATA_NICK_LIST = new String[]{"机器之心","量子位", "AI前线", "新智元", "36氪", "雷锋网", "InfoQ", "CSDN"};
+
     /**
      * 解析文章类型
      *
@@ -50,6 +52,9 @@ public class Utils {
      */
     public static int analysisType(String nickName, String title, String contentTxt){
         if("InfoQ".equals(nickName) && title.contains("Q新闻")){
+            return 1;
+        }
+        if("AI前线".equals(nickName) && title.contains("一周热闻")){
             return 1;
         }
         if("车云".equals(nickName)){
@@ -106,6 +111,8 @@ public class Utils {
     public static int analysisWeight(String nickName,String title, String contentTxt){
         if("InfoQ".equals(nickName) && title.contains("Q新闻")){
             return Integer.MAX_VALUE;
+        } else if("AI前线".equals(nickName) && title.contains("一周热闻")){
+            return Integer.MAX_VALUE;
         }
         return contentTxt.length();
     }
@@ -131,6 +138,19 @@ public class Utils {
      * @return
      */
     public static Date strToDate(String time){
+        time = time + " 01:00:00";
+
+        Date date = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            date = formatter.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static Date strToDateReset(String time){
         time = time + " 00:00:00";
 
         Date date = null;
@@ -141,6 +161,12 @@ public class Utils {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static String dateToStr(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String time = formatter.format(date.getTime());
+        return time;
     }
 
     /**

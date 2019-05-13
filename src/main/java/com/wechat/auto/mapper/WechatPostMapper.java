@@ -172,6 +172,16 @@ public interface WechatPostMapper {
             "select",
             "id, biz, appmsgid, title, digest, contenturl, sourceurl, cover, datetime, readnum, ",
             "likenum, isspider, author, nickname, weight, posttype, content",
+            "from postTable",
+            "where appmsgid = #{appmsgid,jdbcType=VARCHAR}"
+    })
+    @ResultMap("ResultMapWithBLOBs")
+    WechatPost getPostByAppMsId(@Param("appmsgid") String appmsgid);
+
+    @Select({
+            "select",
+            "id, biz, appmsgid, title, digest, contenturl, sourceurl, cover, datetime, readnum, ",
+            "likenum, isspider, author, nickname, weight, posttype, content",
             "from postTable"
     })
     @ResultMap("ResultMapWithBLOBs")

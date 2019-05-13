@@ -49,7 +49,7 @@ public class PostProcessor implements PageProcessor {
         }
 
         String contentTxt = Utils.stripHtml(content).trim();//纯文本内容
-        System.out.println("===========content : "+ contentTxt);
+        //System.out.println("===========content : "+ contentTxt);
         String htmlStr = page.getHtml().toString();
 
         String biz = Utils.stripVarValue(htmlStr, Utils.VAR_BIZ);
@@ -71,6 +71,8 @@ public class PostProcessor implements PageProcessor {
         if(TextUtils.isEmpty(digest)){
             digest = contentDesc;
         }
+
+        digest.replaceAll("\n","");
 
         System.out.println("===========contentTxt length: "+ contentTxt.length());
         System.out.println("===========biz : "+biz);
@@ -95,7 +97,7 @@ public class PostProcessor implements PageProcessor {
         post.setBiz(biz);
         post.setAppmsgid(msgId);
         post.setTitle(title);
-        post.setDigest(digest);System.out.println("===========request Url : "+ requestUrl);
+        post.setDigest(digest);
         post.setSourceurl(msgSourceUrl);
         post.setConver(coverUrl);
         post.setDatetime(dateTime);
@@ -105,13 +107,20 @@ public class PostProcessor implements PageProcessor {
         post.setWeight(weight);
         post.setPosttype(postType);
         post.setContent(contentTxt);
-        try{
+        /**
+         * 更新文章的实际链接地址参数，msglink链接更短
+         */
+        post.setContenturl(msglink);
+        try {
             int updateResult = wechatPostMapper.updateByPrimaryKeySelective(post);
-            System.out.println("===========update result : "+updateResult);
-        }catch (Exception e){
+            System.out.println("===========update result : " + updateResult);
+        } catch (Exception e) {
+            /**
+             * 文章内容的特殊字符会导致写入数据库失败，置空处理
+             */
             post.setContent("");
             int updateResult = wechatPostMapper.updateByPrimaryKeySelective(post);
-            System.out.println("===========update result : "+updateResult);
+            System.out.println("===========update result exception : " + updateResult);
         }
 
 
