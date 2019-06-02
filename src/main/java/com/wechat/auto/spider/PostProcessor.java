@@ -3,6 +3,7 @@ package com.wechat.auto.spider;
 import com.wechat.auto.mapper.WechatPostMapper;
 import com.wechat.auto.model.WechatPost;
 import com.wechat.auto.util.Utils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.util.TextUtils;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -58,9 +59,12 @@ public class PostProcessor implements PageProcessor {
         String title= Utils.stripVarValue(htmlStr, Utils.VAR_TITLE);
         String digest = Utils.stripVarValue(htmlStr, Utils.VAR_DIGEST);
         String contentDesc = Utils.stripDesc(contentTxt);
-        String time = Utils.stripVarValue(htmlStr, Utils.VAR_TIME);
+        //String time = Utils.stripVarValue(htmlStr, Utils.VAR_TIME);
+        String svrTime = Utils.stripVarValue(htmlStr, Utils.SVR_TIME);
 
-        Date dateTime = Utils.strToDate(time);
+        Date dateTime = new Date(Long.parseLong(svrTime) * 1000);
+
+        System.out.println("=================== svrTime : "+ svrTime + " ; " + DateFormatUtils.format(dateTime,"yyyy-MM-dd HH:mm:ss"));
 
         String nickName = Utils.stripVarValue(htmlStr, Utils.VAR_NICKNAME);
         String coverUrl = Utils.stripVarValue(htmlStr, Utils.VAR_COVER_URL);
@@ -80,7 +84,7 @@ public class PostProcessor implements PageProcessor {
         System.out.println("===========msgid : "+msgId);
         System.out.println("===========title : "+title);
         System.out.println("===========desc : "+digest);
-        System.out.println("===========time : "+time + " ; date time : " + dateTime.toString());
+        System.out.println("===========time : "+svrTime + " ; date time : " + dateTime.toString());
         System.out.println("===========nickName : "+nickName);
         System.out.println("===========coverUrl : "+coverUrl);
         System.out.println("===========msgSourceUrl : "+msgSourceUrl);
@@ -120,7 +124,7 @@ public class PostProcessor implements PageProcessor {
              */
             post.setContent("");
             int updateResult = wechatPostMapper.updateByPrimaryKeySelective(post);
-            System.out.println("===========update result exception : " + updateResult);
+            System.out.println("===========update result exception : " + e.getMessage());
         }
 
 

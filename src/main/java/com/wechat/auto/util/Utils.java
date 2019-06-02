@@ -14,6 +14,7 @@ public class Utils {
     public static final String VAR_TITLE = "var msg_title = \"";
     public static final String VAR_DIGEST = "var msg_desc = \"";
     public static final String VAR_TIME = "var publish_time = \"";
+    public static final String SVR_TIME ="var svr_time = \"";
     public static final String VAR_NICKNAME = "var nickname = \"";
     public static final String VAR_COVER_URL = "var msg_cdn_url = \"";
     public static final String VAR_MSG_SOURCE_URL = "var msg_source_url = '";

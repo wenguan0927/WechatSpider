@@ -43,6 +43,7 @@ public class WechatController {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			System.out.println("=================insert exception : "+ e.getMessage());
 		}
 	}
 
