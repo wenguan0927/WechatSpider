@@ -59,12 +59,13 @@ public class PostProcessor implements PageProcessor {
         String title= Utils.stripVarValue(htmlStr, Utils.VAR_TITLE);
         String digest = Utils.stripVarValue(htmlStr, Utils.VAR_DIGEST);
         String contentDesc = Utils.stripDesc(contentTxt);
-        //String time = Utils.stripVarValue(htmlStr, Utils.VAR_TIME);
-        String svrTime = Utils.stripVarValue(htmlStr, Utils.SVR_TIME);
+        String time = Utils.stripVarValue(htmlStr, Utils.VAR_TIME);
+        //String svrTime = Utils.stripVarValue(htmlStr, Utils.SVR_TIME);
+        //Date dateTime = new Date(Long.parseLong(svrTime) * 1000);
 
-        Date dateTime = new Date(Long.parseLong(svrTime) * 1000);
+        Date dateTime = Utils.strToDate(time);
 
-        System.out.println("=================== svrTime : "+ svrTime + " ; " + DateFormatUtils.format(dateTime,"yyyy-MM-dd HH:mm:ss"));
+        System.out.println("=================== svrTime : "+ time + " ; " + DateFormatUtils.format(dateTime,"yyyy-MM-dd HH:mm:ss"));
 
         String nickName = Utils.stripVarValue(htmlStr, Utils.VAR_NICKNAME);
         String coverUrl = Utils.stripVarValue(htmlStr, Utils.VAR_COVER_URL);
@@ -84,7 +85,7 @@ public class PostProcessor implements PageProcessor {
         System.out.println("===========msgid : "+msgId);
         System.out.println("===========title : "+title);
         System.out.println("===========desc : "+digest);
-        System.out.println("===========time : "+svrTime + " ; date time : " + dateTime.toString());
+        System.out.println("===========time : "+ time + " ; date time : " + dateTime.toString());
         System.out.println("===========nickName : "+nickName);
         System.out.println("===========coverUrl : "+coverUrl);
         System.out.println("===========msgSourceUrl : "+msgSourceUrl);

@@ -118,7 +118,8 @@ public class SpiderTimer {
     @Test
     public void test(){
         startWechatSpider();
-        //String[] arrayUrls = new String[]{jiagouUrl};
+        //String[] arrayUrls = new String[]{fourthUrl};
+        //PostProcessor.startSpider(wechatPostMapper, arrayUrls);
         //clearData();
         //reSetContent();
     }
