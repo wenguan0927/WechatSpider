@@ -46,6 +46,7 @@ public class PostProcessor implements PageProcessor {
         System.out.println("===========request Url : "+ requestUrl);
         if(TextUtils.isEmpty(content)){
             System.out.println("文章已和谐！");
+            wechatPostMapper.deleteByRequestUrl(requestUrl);
             return;
         }
 

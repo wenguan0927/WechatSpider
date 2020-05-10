@@ -11,7 +11,7 @@ import java.util.List;
 public class Utils {
 
     public static final String VAR_BIZ = "var appuin = \"";
-    public static final String VAR_TITLE = "var msg_title = \"";
+    public static final String VAR_TITLE = "var msg_title = '";
     public static final String VAR_DIGEST = "var msg_desc = \"";
     public static final String VAR_TIME = "\",s=\"";
     public static final String SVR_TIME ="var svr_time = \"";
@@ -52,13 +52,17 @@ public class Utils {
      * @return 文章类型：1、行业新闻  2、Android开发  3、C++开发  4、技术扩展
      */
     public static int analysisType(String nickName, String title, String contentTxt){
-        if("InfoQ".equals(nickName) && title.contains("Q新闻")){
+        if("InfoQ".equals(nickName) && title.contains("Q资讯")){
             return 1;
         }
         if("AI前线".equals(nickName) && title.contains("一周热闻")){
             return 1;
         }
         if("车云".equals(nickName)){
+            return 1;
+        }
+
+        if("前端之巅".equals(nickName) && title.contains("前端周报")){
             return 1;
         }
 
@@ -110,9 +114,11 @@ public class Utils {
      * @return
      */
     public static int analysisWeight(String nickName,String title, String contentTxt){
-        if("InfoQ".equals(nickName) && title.contains("Q新闻")){
+        if("InfoQ".equals(nickName) && title.contains("Q资讯")){
             return Integer.MAX_VALUE;
         } else if("AI前线".equals(nickName) && title.contains("一周热闻")){
+            return Integer.MAX_VALUE;
+        } else if("前端之颠".equals(nickName) && title.contains("前端周报")){
             return Integer.MAX_VALUE;
         }
         return contentTxt.length();
@@ -180,7 +186,7 @@ public class Utils {
     public static String stripVarValue(String originalHtml, String varValue){
         int bizFromIndex = originalHtml.indexOf(varValue) + varValue.length();
         String endChar = "\"";
-        if(VAR_MSG_SOURCE_URL.equals(varValue)){
+        if(VAR_MSG_SOURCE_URL.equals(varValue) || VAR_TITLE.equals(varValue)){
             endChar = "\'";
         } else if(AUTHOR.equals(varValue)){
             endChar = "<";

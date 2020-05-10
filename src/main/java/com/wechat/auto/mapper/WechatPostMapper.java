@@ -202,6 +202,13 @@ public interface WechatPostMapper {
     })
     int deleteAllData();
 
+    @Delete({
+            "delete from postTable",
+            "where contenturl = #{contenturl,jdbcType=VARCHAR}"
+    })
+    int deleteByRequestUrl(@Param("contenturl") String contenturl);
+
+
     @Select({"<script>",
             "select",
             "id, biz, appmsgid, title, digest, contenturl, sourceurl, cover, datetime, readnum, ",
