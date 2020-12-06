@@ -59,7 +59,10 @@ public class PostProcessor implements PageProcessor {
         String msgId = Utils.stripVarValue(msglink, Utils.MSG_ID);
         String title= Utils.stripVarValue(htmlStr, Utils.VAR_TITLE);
         String digest = Utils.stripVarValue(htmlStr, Utils.VAR_DIGEST);
-        String contentDesc = Utils.stripDesc(contentTxt);
+        String contentDesc = "";
+        if(!TextUtils.isEmpty(contentTxt.trim())){
+            contentDesc = Utils.stripDesc(contentTxt);
+        }
         String time = Utils.stripVarValue(htmlStr, Utils.VAR_TIME);
         //String svrTime = Utils.stripVarValue(htmlStr, Utils.SVR_TIME);
         //Date dateTime = new Date(Long.parseLong(svrTime) * 1000);
@@ -74,7 +77,7 @@ public class PostProcessor implements PageProcessor {
         String author = Utils.stripVarValue(htmlStr, Utils.AUTHOR);
 
         String articleType = Utils.stripVarValue(htmlStr, Utils.VAR_ARTICLE_TYPE);
-        if(TextUtils.isEmpty(digest)){
+        if(TextUtils.isEmpty(digest) && !TextUtils.isEmpty(contentDesc.trim())){
             digest = contentDesc;
         }
 
